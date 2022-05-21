@@ -52,7 +52,6 @@ export default function ListOfFiles() {
                 sortBy: {column: 'name', order: 'asc'},
             });
         if (data !== null) {
-            console.log(data);
             return data.map(val => {
                 const name = val.name;
                 const created_at = val.created_at;
@@ -75,25 +74,81 @@ export default function ListOfFiles() {
 
 
     return (
-        <div style={{width: "100%", height: "400px", overflow: "hidden"}}>
+        <div>
+            <div style={{marginTop: "1.75em"}}>
+                <button
+                    className="button block"
+                    style={{backgroundColor: '#3299a8'}}
+                    onClick={() => {
+                        getListOfFiles().then(res => {
+                            setFileList(res);
+                        })
+                    }}
+                >
+                    Refresh List
+                </button>
+            </div>
             <p>Total number of files stored in database: {fileList.length}</p>
             <p>Displaying file list limit: {file_list_limit}</p>
-            <div style={{
-                height: '100%',
-                marginRight: '-50px',
-                paddingRight: '50px',
-                overflowY: 'scroll'
-            }}>
+            <div style={{width: "100%", height: "250px", overflow: "hidden"}}>
                 {
-                    fileList.map((file_obj: SupaBaseFileMetadata, index) => {
-                        return (
-                            <div key={index + 1}>
-                                {/*<h4>{index + 1}.&nbsp;&nbsp;&nbsp;</h4>*/}
-                                <h4>{file_obj.name}</h4>
-                            </div>
-                        )
-                    })
+                    fileList.length > 0 ?
+                        <div style={{
+                            height: '100%',
+                            marginRight: '-50px',
+                            paddingRight: '50px',
+                            overflowY: 'scroll'
+                        }}>
+                            <table style={{border: '1px solid', 'width': '100%'}}>
+                                <tr style={{border: '1px solid'}}>
+                                    {
+                                        ["No.", "File Name", "Date Created"].map((header_name) => {
+                                            return (
+                                                <th style={{border: '1px solid'}}>
+                                                    {header_name}
+                                                </th>
+                                            );
+                                        })
+                                    }
+                                </tr>
+                                {
+                                    fileList.map((file_obj: SupaBaseFileMetadata, index) => {
+                                        return (
+                                            <tr key={index + 1} style={{border: '1px solid'}}>
+                                                <td style={{
+                                                    border: '1px solid',
+                                                    textAlign: "center",
+                                                    padding: "0.5em"
+                                                }}>
+                                                    {index + 1}
+                                                </td>
+                                                <td style={{
+                                                    border: '1px solid',
+                                                    textAlign: "center",
+                                                    padding: "0.5em"
+                                                }}>
+                                                    {file_obj.name}
+                                                </td>
+                                                <td style={{
+                                                    border: '1px solid',
+                                                    textAlign: "center",
+                                                    padding: "0.5em"
+                                                }}>
+                                                    {new Date(file_obj.created_at).toISOString().slice(0, 10)}
+                                                    <br/>
+                                                    {new Date(file_obj.created_at).toISOString().slice(11, 19)}
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </table>
+                        </div>
+                        :
+                        <p>No items to display</p>
                 }
+
+
             </div>
         </div>
     );
