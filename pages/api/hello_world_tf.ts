@@ -10,7 +10,7 @@ type Data = {
 }
 
 
-export default (req: NextApiRequest, res: NextApiResponse<Data>) => {
+export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 
     const model = tf.sequential();
@@ -18,13 +18,14 @@ export default (req: NextApiRequest, res: NextApiResponse<Data>) => {
     model.compile({loss: 'meanSquaredError', optimizer: 'sgd'});
 
     // Train the model
-    const startTF = () => tf.tensor2d([-1, 0, 1, 2, 3, 4], [6, 1]).dataSync().toString();
+    const startTF = async () => await tf.tensor2d([-1, 0, 1, 2, 3, 4], [6, 1]).dataSync().toString();
 
 
     if (req.method === "GET") {
+        const result = await startTF();
         return res.status(200).json({
             message: "SUCCESS",
-            data: startTF(),
+            data: result,
         })
 
     }
