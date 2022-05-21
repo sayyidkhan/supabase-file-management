@@ -1,7 +1,7 @@
 import * as React from "react";
 import {supabase} from "../lib/supabaseClient";
 import {useEffect, useState} from "react";
-import {DEFAULT_AVATARS_BUCKET, DEFAULT_DIR} from "../lib/constants";
+import {COLOR_HEX_BLUE_GREEN, DEFAULT_AVATARS_BUCKET, DEFAULT_DIR} from "../lib/constants";
 import set = Reflect.set;
 
 interface SupaBaseFileMetadata {
@@ -75,10 +75,10 @@ export default function ListOfFiles() {
 
     return (
         <div>
-            <div style={{marginTop: "1.75em"}}>
+            <div style={{marginTop: "3em"}}>
                 <button
                     className="button block"
-                    style={{backgroundColor: '#3299a8'}}
+                    style={{backgroundColor: COLOR_HEX_BLUE_GREEN}}
                     onClick={() => {
                         getListOfFiles().then(res => {
                             setFileList(res);

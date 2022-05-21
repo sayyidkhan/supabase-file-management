@@ -4,6 +4,8 @@ export const NEXT_PUBLIC_SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_AN
 export const DEFAULT_AVATARS_BUCKET = 'avatars';
 export const DEFAULT_DIR = "models/";
 
+export const COLOR_HEX_BLUE_GREEN = '#3299a8';
+
 export type Profile = {
     id: string
     avatar_url: string

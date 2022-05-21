@@ -106,7 +106,10 @@ export default function UploadModels() {
             //link.parentNode.removeChild(link);
         };
 
-        const {data, error} = await supabase.storage.from(DEFAULT_AVATARS_BUCKET).download(`${DEFAULT_DIR}${file_name}`);
+        const {data, error} = await supabase
+            .storage
+            .from(DEFAULT_AVATARS_BUCKET)
+            .download(`${DEFAULT_DIR}${file_name}`);
         if (data != null) {
             downloadFileFromBrowser(data, file_name);
             //const my_new_file = blobToFile(data, fileName);
